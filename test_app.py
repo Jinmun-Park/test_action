@@ -39,7 +39,7 @@ def picke_replace(name, file):
     else:
         print('Successfully export(.pkl) ' + name.upper())
 
-def api_youtube_popular(name, environment, max_result):
+def api_youtube_popular(name, max_result):
 
     # ====================== Setup ====================== #
     pd.options.mode.chained_assignment = None  # Off warning messages, default='warn'
@@ -149,7 +149,7 @@ def chart_export(key):
 
     starttime = datetime.now()
     print(starttime)
-    youtube_popular = api_youtube_popular(name='youtube_popular', environment='youtube', max_result=20)
+    youtube_popular = api_youtube_popular(name='youtube_popular', max_result=20)
 
     # Move last column(run_date) to first sequence
     youtube_popular['run_date'] = date.today()
