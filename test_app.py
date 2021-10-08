@@ -176,6 +176,6 @@ def chart_export(key):
     print('Time taken : ' + timetaken.__str__())
 
 def test_app():
-    chart_export()
+    chart_export(key='update')
 
 test_app()
