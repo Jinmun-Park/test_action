@@ -1,27 +1,43 @@
 # ====================== LIBRARY SETUP ====================== #
 # API READER SETUP
 from googleapiclient.discovery import build #GOOGLE API
-from urllib.request import Request, urlopen
-from urllib.parse import urlencode, quote_plus, unquote
 from pandas import json_normalize
-import json
-import requests #XML DECODING
-import xmltodict
 # YAML READER SETUP
-import yaml
 import os
 from datetime import datetime
 # PICKLE SETUP
 import pickle
 # LOG SETUP
 import pandas as pd
-from tabulate import tabulate #Future Markdown
-
-from configparser import ConfigParser
 from sqlalchemy import create_engine
-import psycopg2
 from datetime import datetime, date
 import calendar
+
+def read_pickle(file_name: str) -> pd.DataFrame:
+    return pd.read_pickle('Pickle/' + file_name)
+
+def picke_replace(name, file):
+    try:
+        if not os.path.exists('Pickle/'):
+            try:
+                os.makedirs('Pickle')
+            except FileExistsError:
+                pass
+    except Exception as e:
+        print('Failed to create directory (Pickle/..) ' + name.upper() + e.__str__())
+    else:
+        print('Successfully created directory (Pickle/..) ' + name.upper())
+    # Create pickle file
+    try:
+        if os.path.exists('Pickle/' + name + '.pkl'):
+            with open('Pickle/' + name + '.pkl', 'wb') as f:
+                pickle.dump(file, f)
+        else:
+            file.to_pickle('Pickle/' + name + '.pkl')
+    except Exception as e:
+        print('Failed to export(.pkl) ' + name.upper() + e.__str__())
+    else:
+        print('Successfully export(.pkl) ' + name.upper())
 
 def api_youtube_popular(name, environment, max_result):
 
@@ -158,3 +174,8 @@ def chart_export(key):
     print(endtime)
     timetaken = endtime - starttime
     print('Time taken : ' + timetaken.__str__())
+
+def test_app():
+    chart_export()
+
+test_app()
