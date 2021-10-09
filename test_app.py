@@ -12,6 +12,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 from datetime import datetime, date
 import calendar
+from boto.s3.connection import S3Connection
 
 def read_pickle(file_name: str) -> pd.DataFrame:
     return pd.read_pickle('Pickle/' + file_name)
@@ -51,7 +52,7 @@ def api_youtube_popular(name, max_result):
     pickle_name = name
 
     # ====================== Retrieving API and store in DF  ======================#
-    service_key = os.environ['YOUTUBE_API_KEY']
+    service_key = S3Connection(os.environ['YOUTUBE_API_KEY'])
     youtube = build('youtube', 'v3', developerKey=service_key)
 
     try:
@@ -150,6 +151,7 @@ def chart_export(key):
     starttime = datetime.now()
     print(starttime)
     youtube_popular = api_youtube_popular(name='youtube_popular', max_result=20)
+    print(youtube_popular)
 
     # Move last column(run_date) to first sequence
     youtube_popular['run_date'] = date.today()
@@ -160,13 +162,13 @@ def chart_export(key):
 
     if key == 'new':
         # CASE 1 : Push DF to Table
-        params = os.environ['SQL_URL']
+        params = S3Connection(os.environ['SQL_URL'])
         engine = create_engine(params)
         youtube_popular.to_sql('popular_chart', engine, index=False)
 
     elif key == 'update':
         # CASE 2 : Append DF to Table
-        params = os.environ['SQL_URL']
+        params = S3Connection(os.environ['SQL_URL'])
         engine = create_engine(params)
         youtube_popular.to_sql('popular_chart', engine, if_exists='append', index=False)
 
