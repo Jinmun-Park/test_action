@@ -216,7 +216,7 @@ def postgresql_run():
     port = os.environ['SQL_PORT']
     password = os.environ['SQL_PW']
 
-    params_dic = config(host=host, database=database, user=user, port=port, password=password)
+    params_dic = config(host=host, database=database, user=user, port=port, password=password, sslmode='require')
     conn = connect(params_dic)
     curr = conn.cursor()
 
