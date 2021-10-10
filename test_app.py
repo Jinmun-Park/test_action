@@ -163,8 +163,8 @@ def config():
     params_dic = {
         "host": os.environ['SQL_HOST'],
         "database": os.environ['SQL_DB'],
-        "port": os.environ['SQL_USER'],
-        "user": os.environ['SQL_PORT'],
+        "port": os.environ['SQL_PORT'],
+        "user": os.environ['SQL_USER'],
         "password": os.environ['SQL_PW'],
         "sslmode": "require"
     }
