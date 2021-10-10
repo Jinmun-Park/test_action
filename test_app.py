@@ -159,14 +159,14 @@ def connect(params_dic):
         print(error)
     return conn
 
-def config(host, database, user, port, password):
-
+def config():
     params_dic = {
-        "host": host,
-        "database": database,
-        "port": port,
-        "user":user,
-        "password": password
+        "host": os.environ['SQL_HOST'],
+        "database": os.environ['SQL_DB'],
+        "port": os.environ['SQL_USER'],
+        "user": os.environ['SQL_PORT'],
+        "password": os.environ['SQL_PW'],
+        "sslmode": "required"
     }
     return params_dic
 
@@ -210,14 +210,8 @@ def postgresql_run():
     youtube_popular = youtube_popular[cols]
 
     # Connect to Postgresql
-    host = os.environ['SQL_HOST']
-    database = os.environ['SQL_DB']
-    user = os.environ['SQL_USER']
-    port = os.environ['SQL_PORT']
-    password = os.environ['SQL_PW']
-
-    params_dic = config(host=host, database=database, user=user, port=port, password=password)
-    conn = connect(params_dic, sslmode='require')
+    params_dic = config()
+    conn = connect(params_dic)
     curr = conn.cursor()
 
     # Inserting each row
