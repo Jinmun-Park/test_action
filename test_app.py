@@ -216,8 +216,8 @@ def postgresql_run():
     port = os.environ['SQL_PORT']
     password = os.environ['SQL_PW']
 
-    params_dic = config(host=host, database=database, user=user, port=port, password=password, sslmode='require')
-    conn = connect(params_dic)
+    params_dic = config(host=host, database=database, user=user, port=port, password=password)
+    conn = connect(params_dic, sslmode='require')
     curr = conn.cursor()
 
     # Inserting each row
