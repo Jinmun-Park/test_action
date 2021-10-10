@@ -166,7 +166,7 @@ def config():
         "port": os.environ['SQL_USER'],
         "user": os.environ['SQL_PORT'],
         "password": os.environ['SQL_PW'],
-        "sslmode": "required"
+        "sslmode": "require"
     }
     return params_dic
 
